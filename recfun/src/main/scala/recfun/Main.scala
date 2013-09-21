@@ -44,9 +44,7 @@ object Main {
     def recur(counter: Int, chars: List[Char]): Boolean = {
       if (counter < 0) false
       else chars match {
-	      case Nil =>
-	        if(counter == 0) true
-	        else false
+	      case Nil => counter == 0
 	      case head::tail => {
 	         val newCount = if(head == '(') counter + 1 
 		        else if (head == ')') counter - 1
@@ -55,10 +53,10 @@ object Main {
 	      	}
 	  	  }
     }
-    
     recur(0, chars)
   }
 
+  def balance(chars: String):Boolean = balance(chars.toList)
   /**
    * Exercise 3
    */
