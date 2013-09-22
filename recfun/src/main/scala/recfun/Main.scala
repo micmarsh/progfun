@@ -38,7 +38,7 @@ object Main {
   /**
    * Exercise 2
    */
-  def balance(chars: List[Char]): Boolean = {
+  def balance(chars: List[Char]) = {
     
     @tailrec
     def recur(counter: Int, chars: List[Char]): Boolean = {
@@ -60,5 +60,17 @@ object Main {
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ??? 
+  def countChange(money: Int, coins: List[Int]): Int = 
+    if(money == 0) 1
+    else if(money < 0 || coins.isEmpty) 0
+    else {
+      val head::tail = coins
+      countChange(money, tail) + countChange(money-head, coins)
+    }
+  
+  /*
+   * This is *not* the "change-making" problem, it's (probably) simpler and (might)
+   * have a more iterative solution, since the hint makes reference to head + tail
+   * 
+   */
 }
