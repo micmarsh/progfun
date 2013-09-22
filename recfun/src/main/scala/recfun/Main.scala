@@ -67,10 +67,4 @@ object Main {
       val head::tail = coins
       countChange(money, tail) + countChange(money-head, coins)
     }
-  
-  /*
-   * This is *not* the "change-making" problem, it's (probably) simpler and (might)
-   * have a more iterative solution, since the hint makes reference to head + tail
-   * 
-   */
 }
