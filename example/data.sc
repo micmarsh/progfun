@@ -18,12 +18,13 @@ object data {
  			denom * that.denom)
  	
  	def + (that:Rational) = arithmetic(_ + _)(that)
+  def unary_- = new Rational(-numer, denom)
   def - (that:Rational) = arithmetic(_ - _)(that)
  	def < (that:Rational) = numer * that.denom < that.numer * denom
  	def max (that: Rational) = if (this < that) that else this
  	override def toString = {
- 		val g = gcd(x,y)
- 		//exposing arithmetic overflows by putting this in here
+ 		val g = math.abs(gcd(x,y))
+ 		//exposing arithmetic overflows by putting this in here+
 	 	if (denom == 1) numer.toString
 	 	else numer / g + "/" + denom / g
 	 }
@@ -38,6 +39,21 @@ object data {
  val y = new Rational(5,7)                        //> y  : data.Rational = 5/7
  val z = new Rational(3,2)                        //> z  : data.Rational = 3/2
  x - y -z                                         //> res1: data.Rational = -79/42
- 
- x < y                                            //> res2: Boolean = true
+ - y                                              //> res2: data.Rational = -5/7
+ x < y                                            //> res3: Boolean = true
 }
+
+/*
+precedence 
+letters
+|
+^
+&
+< >
+= !
+:
++ -
+* / %
+all others
+
+*/
