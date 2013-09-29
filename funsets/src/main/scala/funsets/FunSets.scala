@@ -51,29 +51,33 @@ object FunSets {
    * The bounds for `forall` and `exists` are +/- 1000.
    */
   val bound = 1000
-
-  /**
-   * Returns whether all bounded integers within `s` satisfy `p`.
-   */
-  def forall(s: Set, p: Int => Boolean): Boolean = {
+  
+  
+  def boundedPredicate(default:Boolean)(s: Set, p: Int => Boolean) = {
     def iter(a: Int): Boolean = {
-      if (a > bound) true
-      else if (s(a) && !p(a)) false // this *might* need to be different for exists to work
+      if (a > bound) default
+      else if (s(a) && p(a)) !default
       else iter(a + 1)
     }
     iter(-bound)
   }
 
   /**
+   * Returns whether all bounded integers within `s` satisfy `p`.
+   */
+  def forall(s: Set, p: Int => Boolean): Boolean = 
+    boundedPredicate(true)(s, (a:Int) => !p(a))
+  
+  /**
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-  def exists(s: Set, p: Int => Boolean): Boolean = ??? // test cases want this in terms of forall
-
+  def exists(s: Set, p: Int => Boolean): Boolean = // in terms of forall? since both args are predicates, feel free to manipulate each
+    boundedPredicate(false)(s,p)
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-  def map(s: Set, f: Int => Int): Set = ??? //want to avoid iteration, how to implement a lazy set map?
+  def map(s: Set, f: Int => Int): Set = (x:Int) => exists(s, (item: Int) => f(item) == x)
     
   /**
    * Displays the contents of a set
