@@ -43,6 +43,12 @@ class TweetSetSuite extends FunSuite {
       assert(size(set5.filter(tw => tw.retweets == 20)) === 2)
     }
   }
+  
+  test("union: empty with empty") {
+    new TestSets {
+      assert(size(set1 union set1) === 0)
+    }
+  }
 
   test("union: set4c and set4d") {
     new TestSets {
@@ -55,6 +61,7 @@ class TweetSetSuite extends FunSuite {
       assert(size(set5.union(set1)) === 4)
     }
   }
+  
 
   test("union: with empty set (2)") {
     new TestSets {
