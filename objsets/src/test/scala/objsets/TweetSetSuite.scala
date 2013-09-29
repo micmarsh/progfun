@@ -5,6 +5,8 @@ import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
+import util.Random
+
 @RunWith(classOf[JUnitRunner])
 class TweetSetSuite extends FunSuite {
   trait TestSets {
@@ -16,6 +18,21 @@ class TweetSetSuite extends FunSuite {
     val set4c = set3.incl(c)
     val set4d = set3.incl(d)
     val set5 = set4c.incl(d)
+    
+    val lulzSet = lotsOfTweets(300)
+    }
+  
+//  val randUsers = List("A", "bee", "si", "dee", "e", "ass")
+//  val randMessages = List("yolo", "balls", "what", "wut", "#yolo")
+    
+  def lotsOfTweets(amount: Int) = {
+	  def loop(left:Int, acc:TweetSet):TweetSet = 
+	    if(left == 0) acc
+	    else loop(left - 1, acc incl new Tweet(Random.nextString(Random.nextInt(left + amount) % 20),
+	        Random.nextString(Random.nextInt(left * amount) % 20),
+	        Random.nextInt(left * left)))
+	  
+	  loop(amount, new Empty)
   }
 
   def asSet(tweets: TweetSet): Set[Tweet] = {
@@ -35,6 +52,12 @@ class TweetSetSuite extends FunSuite {
   test("filter: a on set5") {
     new TestSets {
       assert(size(set5.filter(tw => tw.user == "a")) === 1)
+    }
+  }
+  
+  test("filter: that big ass set") {
+    new TestSets {
+      lulzSet.filter(tw => tw.retweets > 500).foreach(println)
     }
   }
 

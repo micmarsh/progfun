@@ -140,7 +140,13 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     removeElem filterAcc(p, newAcc)
   }
 
-  def union(that: TweetSet) = ((left union right) union that) incl elem
+  def union(that: TweetSet) = {//((left union right) union that) incl elem
+		  var result:TweetSet = new Empty
+		  def accumulate(tw:Tweet) = result = result incl tw
+		  foreach( accumulate )
+		  that foreach accumulate
+		  result
+  }
   
   def mostRetweeted = mrAcc(elem)
   def mrAcc(current: Tweet) = {
@@ -171,7 +177,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   def remove(tw: Tweet): TweetSet =
     if (tw.text < elem.text) new NonEmpty(elem, left.remove(tw), right)
     else if (elem.text < tw.text) new NonEmpty(elem, left, right.remove(tw))
-    else left.union(right)
+    else left union right
 
   def foreach(f: Tweet => Unit): Unit = {
     f(elem)
