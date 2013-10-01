@@ -52,28 +52,23 @@ object FunSets {
    */
   val bound = 1000
   
-  
-  def boundedPredicate(default:Boolean)(s: Set, p: Int => Boolean) = {
-    def iter(a: Int): Boolean = {
-      if (a > bound) default
-      else if (s(a) && p(a)) !default
+  /**
+   * Returns whether all bounded integers within `s` satisfy `p`.
+   */
+  def forall(s: Set, p: Int => Boolean): Boolean = { 
+     def iter(a: Int): Boolean = {
+      if (a > bound) true
+      else if (s(a) && !p(a)) false
       else iter(a + 1)
     }
     iter(-bound)
   }
-
-  /**
-   * Returns whether all bounded integers within `s` satisfy `p`.
-   */
-  def forall(s: Set, p: Int => Boolean): Boolean = 
-    boundedPredicate(true)(s, (a:Int) => !p(a))
   
   /**
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-  def exists(s: Set, p: Int => Boolean): Boolean = // in terms of forall? since both args are predicates, feel free to manipulate each
-    boundedPredicate(false)(s,p)
+  def exists(s: Set, p: Int => Boolean): Boolean = !forall(s, !p(_))
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */

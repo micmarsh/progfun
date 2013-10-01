@@ -19,18 +19,15 @@ class TweetSetSuite extends FunSuite {
     val set4d = set3.incl(d)
     val set5 = set4c.incl(d)
     
-    val lulzSet = lotsOfTweets(300)
+    val lulzSet = lotsOfTweets(3000)
     }
   
-//  val randUsers = List("A", "bee", "si", "dee", "e", "ass")
-//  val randMessages = List("yolo", "balls", "what", "wut", "#yolo")
-    
   def lotsOfTweets(amount: Int) = {
 	  def loop(left:Int, acc:TweetSet):TweetSet = 
 	    if(left == 0) acc
 	    else loop(left - 1, acc incl new Tweet(Random.nextString(Random.nextInt(left + amount) % 20),
 	        Random.nextString(Random.nextInt(left * amount) % 20),
-	        Random.nextInt(left * left)))
+	        Random.nextInt(left * left) % 1000))
 	  
 	  loop(amount, new Empty)
   }

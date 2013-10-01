@@ -148,6 +148,20 @@ class FunSetSuite extends FunSuite {
     }
   }
   
+  test("shit exists, and doesn't exist") {
+    new UnionSets {
+      assert(exists(thruTen, _ == 8))
+      assert(!exists(thruTen, _ == 18))
+    }
+  }
+  
+  test("forall") {
+    new UnionSets {
+      assert(forall(thruTen, _ < 10))
+      assert(!forall(thruTen, _ < 7))
+    }
+  }
+  
   test("it's instagram, for sets") {
     new UnionSets {
       val evens = filter(thruTen, (x) => x % 2 == 0)

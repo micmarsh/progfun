@@ -133,7 +133,7 @@ class Empty extends TweetSet {
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
-  def removeElem = (this remove elem)
+  def removeElem = this remove elem
   
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
     val newAcc = if (p(elem)) acc incl elem else acc
@@ -143,7 +143,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   def union(that: TweetSet) = {//((left union right) union that) incl elem
 		  var result:TweetSet = new Empty
 		  def accumulate(tw:Tweet) = result = result incl tw
-		  foreach( accumulate )
+		  this foreach accumulate 
 		  that foreach accumulate
 		  result
   }
@@ -181,8 +181,8 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   def foreach(f: Tweet => Unit): Unit = {
     f(elem)
-    left.foreach(f)
-    right.foreach(f)
+    left foreach f
+    right foreach f 
   }
 }
 
@@ -193,7 +193,7 @@ trait TweetList {
   def foreach(f: Tweet => Unit): Unit =
     if (!isEmpty) {
       f(head)
-      tail.foreach(f)
+      tail foreach f
     }
 }
 
@@ -212,14 +212,18 @@ object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-  lazy val googleTweets: TweetSet = ???
-  lazy val appleTweets: TweetSet = ???
+  private def containsKeyword(list: List[String])(tweet: Tweet):Boolean = {
+    list.foldRight(false)((str:String, soFar:Boolean) => soFar || tweet.text.contains(str))
+  }
+  
+  lazy val googleTweets: TweetSet = TweetReader.allTweets filter containsKeyword(google) 
+  lazy val appleTweets: TweetSet = TweetReader.allTweets filter  containsKeyword(apple)
 
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
-  lazy val trending: TweetList = ???
+  lazy val trending: TweetList = googleTweets.union(appleTweets).descendingByRetweet
 }
 
 object Main extends App {
