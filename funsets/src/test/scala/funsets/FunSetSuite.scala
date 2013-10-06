@@ -150,8 +150,8 @@ class FunSetSuite extends FunSuite {
   
   test("shit exists, and doesn't exist") {
     new UnionSets {
-      assert(exists(thruTen, _ == 8))
-      assert(!exists(thruTen, _ == 18))
+      assert(exists(thruTen, _ > 8))
+      assert(!exists(thruTen, _ < -9))
     }
   }
   

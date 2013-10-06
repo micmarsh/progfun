@@ -28,7 +28,7 @@ object FunSets {
    */
   def union(s: Set, t: Set): Set = (x) => s(x) || t(x)
   
-  def range(start: Int, end: Int):Set = List.range(start, end).map(singletonSet) reduce union
+  def range(start: Int, end: Int):Set = x => x >= start && x < end//List.range(start, end).map(singletonSet) reduce union
 
   /**
    * Returns the intersection of the two given sets,
