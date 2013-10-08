@@ -15,6 +15,9 @@ class HuffmanSuite extends FunSuite {
     val l1 = Leaf('b', 3)
   }
 
+  trait LongString {
+  }
+  
   test("weight of a larger tree") {
     new TestTrees {
       assert(weight(t1) === 5)
@@ -40,7 +43,11 @@ class HuffmanSuite extends FunSuite {
 
   test("counts things up") {
     val timesList = times("aeaacbcb".toList)
+    val shortList = times("a".toList)
+    val longList = times("zzzzgbcbcczcczc".toList)
     assert(timesList.to[Set]  === Set(('a',3),('e',1),('b',2),('c',2)))
+    assert(shortList.to[Set] === Set(('a',1)))
+    assert(longList.to[Set] === Set(('z',6), ('g',1), ('b',2), ('c',6)))
   }
   
   test("makeOrderedLeafList for some frequency table") {
@@ -52,15 +59,26 @@ class HuffmanSuite extends FunSuite {
     assert(combine(leaflist) === List(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3), Leaf('x',4)))
   }
   
-  test("decoding of french") {
-    println(decodedSecret)
-  }
 
-  test("decode and encode a very short text should be identity") {
-    new TestTrees {
-      for (chars <- List("ab","d","a"))
-    	  assert(decode(t1, encode(t1)(chars.toList)) === chars.toList)
-    //  assert(decode(t1, encode(t1)("aeeebcec".toList)) === "aeeebcec".toList)
-    }
+  test("'a' should not encode to '000' in french, but 's' should") {
+    assert(encode(frenchCode)(List('a')) != List(0,0,0))
+    assert(encode(frenchCode)(List('s')) === List(0,0,0))
   }
+  
+  test("decode and encode a very short text should be identity") {
+      val t1 = frenchCode
+      for (chars <- List("ab","b","a"))
+    	  assert(decode(t1, encode(t1)(chars.toList)) === chars.toList)
+    
+  }
+  
+  
+  
+  test("encode-decode on some long list of bits is identity") {
+        val frenchBits = List(1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1)
+        			 //	 List(0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1)
+        assert(encode(frenchCode)(decode(frenchCode, frenchBits)) === frenchBits)
+  }
+  
+  
 }

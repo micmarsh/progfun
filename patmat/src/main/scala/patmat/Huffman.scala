@@ -221,13 +221,12 @@ object Huffman {
    * into a sequence of bits.
    */
   def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
-    
      def charToBits(toEncode: Char): List[Bit] = {
        def buildBits(tree: CodeTree, acc: List[Bit]): List[Bit] =
 	      tree match {
 	        case Leaf(char, weight) => acc.reverse
 	        case Fork(left, right, full, weight) => {
-	          if (toEncode < chars(right).head) buildBits(left, 0 :: acc)
+	          if (chars(left) contains toEncode) buildBits(left, 0 :: acc)
 	          else buildBits(right, 1 :: acc)
 	        }
 	      }
