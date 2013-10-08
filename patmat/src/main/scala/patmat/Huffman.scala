@@ -174,7 +174,7 @@ object Huffman {
    * the resulting list of characters.
    */
   def decode(tree: CodeTree, bits: List[Bit]): List[Char] = {
-    def makeSingleChar(tree: CodeTree, bits: List[Bit]): (Char, List[Bit]) = {
+    def makeSingleChar(tree: CodeTree, bits: List[Bit]): (Char, List[Bit]) = 
       tree match {
         case Leaf(char, weight) => (char, bits)
         case Fork(left, right, full, weight) => {
@@ -182,7 +182,7 @@ object Huffman {
           else /* bits.head == 1 */ makeSingleChar(right, bits.tail)
         }
       }
-    }
+    
     def loop(acc: List[Char], bits: List[Bit]): List[Char] = 
        if(bits.isEmpty) acc
        else {
@@ -220,8 +220,30 @@ object Huffman {
    * This function encodes `text` using the code tree `tree`
    * into a sequence of bits.
    */
-  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
-
+  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+    
+     def charToBits(toEncode: Char): List[Bit] = {
+       def buildBits(tree: CodeTree, acc: List[Bit]): List[Bit] =
+	      tree match {
+	        case Leaf(char, weight) => acc.reverse
+	        case Fork(left, right, full, weight) => {
+	          if (toEncode < chars(right).head) buildBits(left, 0 :: acc)
+	          else buildBits(right, 1 :: acc)
+	        }
+	      }
+       buildBits(tree, List[Bit]())
+     }
+    
+      def loop(acc: List[Bit], chars: List[Char]): List[Bit] = 
+       if(chars.isEmpty) acc
+       else {
+         val bits = charToBits(chars.head)
+         loop(acc ::: bits, chars.tail)
+      }
+      
+      loop(List[Bit](), text)
+    
+  }
 
   // Part 4b: Encoding using code table
 
