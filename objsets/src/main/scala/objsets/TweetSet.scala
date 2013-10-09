@@ -141,9 +141,8 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   }
 
   def union(that: TweetSet) = {//((left union right) union that) incl elem
-		  var result:TweetSet = new Empty
+		  var result:TweetSet = this
 		  def accumulate(tw:Tweet) = result = result incl tw
-		  this foreach accumulate 
 		  that foreach accumulate
 		  result
   }

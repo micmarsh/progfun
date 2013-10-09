@@ -243,7 +243,7 @@ object Huffman {
       loop(List[Bit](), text)
     
   }
-
+             
   // Part 4b: Encoding using code table
 
   type CodeTable = List[(Char, List[Bit])]
@@ -252,7 +252,13 @@ object Huffman {
    * This function returns the bit sequence that represents the character `char` in
    * the code table `table`.
    */
-  def codeBits(table: CodeTable)(char: Char): List[Bit] = ???
+  def codeBits(table: CodeTable)(char: Char):List[Bit] = codeBits(table.toMap)(char)
+  
+  def codeBits(table:Map[Char, List[Bit]])(char: Char):List[Bit] = table.get(char) match {
+    case None => throw new Error("Shit we can't help you here")
+    case Some(result) => result
+  }
+  
 
   /**
    * Given a code tree, create a code table which contains, for every character in the
@@ -262,14 +268,13 @@ object Huffman {
    * a valid code tree that can be represented as a code table. Using the code tables of the
    * sub-trees, think of how to build the code table for the entire tree.
    */
-  def convert(tree: CodeTree): CodeTable = ???
-
+  def convert(tree: CodeTree): CodeTable = ??? //thoughts: need to accumulate, but also need to make sure you're "working" on an individual letters accurately
   /**
    * This function takes two code tables and merges them into one. Depending on how you
    * use it in the `convert` method above, this merge method might also do some transformations
    * on the two parameter code tables.
    */
-  def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = ???
+  def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = ???//this may need to be implemented first, according to hint right above
 
   /**
    * This function encodes `text` according to the code tree `tree`.
@@ -277,5 +282,12 @@ object Huffman {
    * To speed up the encoding process, it first converts the code tree to a code table
    * and then uses it to perform the actual encoding.
    */
-  def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
+  def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+    val table = convert(tree).toMap
+    def loop(acc: List[Bit], text: List[Char]):List[Bit] = text match {
+      case Nil => acc
+      case head::tail => loop(acc ::: codeBits(table)(head), tail)
+    }
+    loop(Nil, text)
+  }
 }
