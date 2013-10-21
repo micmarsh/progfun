@@ -123,12 +123,20 @@ object Huffman {
   def combine(trees: List[CodeTree]): List[CodeTree] = trees match {
       case Nil => Nil
       case head::Nil => trees
-      case head :: second :: tail => {
-        val weight0 = weight(head)
-        val weigth1 = weight(second)
-        makeCodeTree(head, second) :: tail
-      }
+      case head :: second :: tail => 
+        //either this or just popping the head onto the tail
+        //check to see who wrote that failing test case
+      	makeCodeTree(head, second) :: tail
+        //orderByWeight(makeCodeTree(head, second), tail)
     }
+  
+  def orderByWeight(element: CodeTree, list: List[CodeTree]) = {
+    def orderAcc(elem: CodeTree, start:List[CodeTree], end: List[CodeTree]):List[CodeTree] = {
+      if (end.isEmpty || weight(elem) > weight(end.head)) start ::: elem :: end
+      else orderAcc(elem, start ::: List(end.head), end.tail)
+    }
+    orderAcc(element, Nil, list)
+  }
 
   /**
    * This function will be called in the following way:
@@ -268,12 +276,15 @@ object Huffman {
    * a valid code tree that can be represented as a code table. Using the code tables of the
    * sub-trees, think of how to build the code table for the entire tree.
    */
-  def convert(tree: CodeTree): CodeTable = ???
-//    def convertAcc(acc: List[Bit], tree: CodeTree): CodeTable = tree match {
-//	  
-//  	}//thoughts: need to accumulate, but also need to make sure you're "working" on an individual letters accurately
-//  
-//  }
+  def convert(tree: CodeTree): CodeTable = {
+    def convertAcc(acc: List[Bit], tree: CodeTree): Map[Char, List[Bit]]= tree match {
+      case Leaf(char, weight) => Map(char -> acc.reverse)
+      case Fork(left, right, all, weight) => {
+       convertAcc(0::acc, left) ++ convertAcc(1::acc, right)
+      }
+  	}//thoughts: need to accumulate, but also need to make sure you're "working" on an individual letters accurately
+    convertAcc(Nil, tree).toList
+  }
   /**
    * This function takes two code tables and merges them into one. Depending on how you
    * use it in the `convert` method above, this merge method might also do some transformations
@@ -289,9 +300,10 @@ object Huffman {
    */
   def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = {
     val table = convert(tree).toMap
+    val converter = codeBits(table)_
     def loop(acc: List[Bit], text: List[Char]):List[Bit] = text match {
       case Nil => acc
-      case head::tail => loop(acc ::: codeBits(table)(head), tail)
+      case head::tail => loop(acc ::: converter(head), tail)
     }
     loop(Nil, text)
   }

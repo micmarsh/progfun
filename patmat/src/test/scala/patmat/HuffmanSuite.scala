@@ -13,10 +13,10 @@ class HuffmanSuite extends FunSuite {
     val t1 = Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5)
     val t2 = Fork(Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5), Leaf('d',4), List('a','b','d'), 9)
     val l1 = Leaf('b', 3)
+    val frenchBits = List(1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1)
+
   }
 
-  trait LongString {
-  }
   
   test("weight of a larger tree") {
     new TestTrees {
@@ -75,10 +75,23 @@ class HuffmanSuite extends FunSuite {
   
   
   test("encode-decode on some long list of bits is identity") {
-        val frenchBits = List(1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1)
         			 //	 List(0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1)
-        assert(encode(frenchCode)(decode(frenchCode, frenchBits)) === frenchBits)
+    new TestTrees {
+          assert(encode(frenchCode)(decode(frenchCode, frenchBits)) === frenchBits)
+    }    
   }
   
+  
+  test("quick encode functions basically the same as normal encode") {
+	  new TestTrees {
+	    assert(quickEncode(frenchCode)(decode(frenchCode, frenchBits)) === frenchBits)
+	    val t = frenchCode
+	    for (chars <- List("ab","b","a"))
+    	  assert(decode(t, quickEncode(t)(chars.toList)) === chars.toList)
+    	assert(quickEncode(frenchCode)(List('a')) != List(0,0,0))
+    	assert(quickEncode(frenchCode)(List('s')) === List(0,0,0))
+	    
+	  }
+  }
   
 }
