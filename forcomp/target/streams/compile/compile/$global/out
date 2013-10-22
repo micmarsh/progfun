@@ -14,7 +14,7 @@
 [0m[[0mdebug[0m] [0m	external source: Set()[0m
 [0m[[0mdebug[0m] [0mAll initially invalidated sources: Set(/home/michael/scala-workspace/progfun-assignments/forcomp/src/main/scala/forcomp/Anagrams.scala)[0m
 [0m[[0minfo[0m] [0mCompiling 1 Scala source to /home/michael/scala-workspace/progfun-assignments/forcomp/target/scala-2.10/classes...[0m
-[0m[[0mdebug[0m] [0mRunning cached compiler 209e406b, interfacing (CompilerInterface) with Scala compiler version 2.10.2[0m
+[0m[[0mdebug[0m] [0mRunning cached compiler 66e56fc7, interfacing (CompilerInterface) with Scala compiler version 2.10.2[0m
 [0m[[0mdebug[0m] [0mCalling Scala compiler with arguments  (CompilerInterface):[0m
 [0m[[0mdebug[0m] [0m	-deprecation[0m
 [0m[[0mdebug[0m] [0m	-feature[0m
@@ -24,10 +24,10 @@
 [0m[[0mdebug[0m] [0m	/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/netx.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/plugin.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rhino.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/classes:/home/michael/.sbt/boot/scala-2.10.2/lib/scala-library.jar[0m
 [0m[[0mdebug[0m] [0m	-classpath[0m
 [0m[[0mdebug[0m] [0m	/home/michael/scala-workspace/progfun-assignments/forcomp/target/scala-2.10/classes[0m
-[0m[[0mdebug[0m] [0mScala compilation took 64.540160583 s[0m
+[0m[[0mdebug[0m] [0mScala compilation took 3.295514457 s[0m
 [0m[[0mdebug[0m] [0mStep 2 changed sources and immdediate dependencies:[0m
-[0m[[0mdebug[0m] [0m	Set(/home/michael/scala-workspace/progfun-assignments/forcomp/src/main/scala/forcomp/Anagrams.scala)[0m
+[0m[[0mdebug[0m] [0m	Set()[0m
 [0m[[0mdebug[0m] [0mNon-trivial strongly connected components: [0m
 [0m[[0mdebug[0m] [0m	[0m
 [0m[[0mdebug[0m] [0mStep 2 invalidated sources:[0m
-[0m[[0mdebug[0m] [0m	Set(/home/michael/scala-workspace/progfun-assignments/forcomp/src/main/scala/forcomp/Anagrams.scala)[0m
+[0m[[0mdebug[0m] [0m	Set()[0m

@@ -75,7 +75,11 @@ object Anagrams {
   }
 
   /** Returns all the anagrams of a given word. */	
-  def wordAnagrams(word: Word): List[Word] = ???
+  def wordAnagrams(word: Word): List[Word] = 
+    dictionaryByOccurrences get wordOccurrences(word) match {
+	    case None => List()
+	    case Some(occurrences) => occurrences
+  	}
 
   /** Returns the list of all subsets of the occurrence list.
    *  This includes the occurrence itself, i.e. `List(('k', 1), ('o', 1))`
@@ -99,7 +103,55 @@ object Anagrams {
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+  def combinations(occurrences: Occurrences): List[Occurrences] = {
+    val length = occurrences.length
+    val initialCombos = for {
+    	index <- (0 to length)
+    	combo <- occurrences.combinations(index)
+    } yield combo
+    println(initialCombos.toList)
+    List()
+    
+    /*
+     * You Know what you want "loop" to do, or rather what you should do with 
+     * the above in general: For each item List(('a', 3)...),
+     * 
+     * need to generate
+     * a new seq of lists Seq(List(('a', 1)...), List(('a', 2)...),...), that 
+     * then be all flattened together into the final list of lists
+     * 
+     * Easy for the case of length one, but what's the "recursive step" (may
+     * not actually be recursive)
+     * 
+     * so do:
+     * 
+     *
+     * 
+     * def countCombos(List[(Char, Int)]): Seq(List[(Char, Int)])
+     * 		match list {
+     *   	case Nil => Nil
+     *      case (char, int)::tail =>  
+     *    the problem is this ->
+     *    		for (i <- (1 to int))
+     *             yield (char, i)::countCombos(tail)
+     *         this damn pattern keeps coming up, it's so close!
+     *   }
+     *   
+     *or {
+     * 		for {(char, int) <- list
+     *  		  i <- (1 to int)} yield (char, i)
+     *      
+     *       no! b/c it will just expand all the shit out, maybe
+     *       
+     *     for { (char, int) <- list } yield	 		
+     * 	
+     * }
+     */
+    
+    //TODO: this shit be failing the test case. Check it out tomorrow
+    //shit, the second one is correct, you ain't got no short lists homie!
+  }
+  
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    * 
@@ -111,7 +163,17 @@ object Anagrams {
    *  Note: the resulting value is an occurrence - meaning it is sorted
    *  and has no zero-entries.
    */
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = ???
+  def subtract(x: Occurrences, y: Occurrences): Occurrences = {
+    val toSub = y.toMap.withDefault((c:Char) => 0)
+    def loop(acc: Occurrences, x:Occurrences): Occurrences = 
+      if (x.isEmpty) acc.reverse
+      else {
+        val (char, count)::tail = x
+        loop((char, count - toSub(char))::acc, tail)
+      }
+      
+    loop(Nil, x).filter{case (char, int) => int > 0}
+  }
 
   /** Returns a list of all anagram sentences of the given sentence.
    *  
