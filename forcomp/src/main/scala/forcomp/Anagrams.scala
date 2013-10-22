@@ -110,8 +110,8 @@ object Anagrams {
     	combo <- occurrences.combinations(index)
     } yield combo
     println(initialCombos.toList)
-    List()
-    
+   
+    //Dam, watch the lecture tomorrow night, for perhaps a flash of inspiration
     /*
      * You Know what you want "loop" to do, or rather what you should do with 
      * the above in general: For each item List(('a', 3)...),
@@ -215,6 +215,12 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = { 
+		  //first things first, merge all the words together. There's got 
+		  // to be a "join" or something, maybe flatMap
+    
+		  //then need to iterate le combos, lots of other stuff involving subtract and stuff
+  
+  }
 
 }
