@@ -166,10 +166,10 @@ object Anagrams {
   def subtract(x: Occurrences, y: Occurrences): Occurrences = {
     val toSub = y.toMap.withDefault((c:Char) => 0)
     def loop(acc: Occurrences, x:Occurrences): Occurrences = 
-      if (x.isEmpty) acc.reverse
-      else {
-        val (char, count)::tail = x
-        loop((char, count - toSub(char))::acc, tail)
+      x match {
+	      case Nil => Nil
+	      case (char, count)::tail => 
+	    	loop((char, count - toSub(char))::acc, tail)
       }
       
     loop(Nil, x).filter{case (char, int) => int > 0}
