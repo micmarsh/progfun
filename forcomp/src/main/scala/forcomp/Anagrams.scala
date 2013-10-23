@@ -103,53 +103,15 @@ object Anagrams {
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  for (i <- (0 to 10); j <- (0 to i)) yield i * j
   def combinations(occurrences: Occurrences): List[Occurrences] = {
-    val length = occurrences.length
-    val initialCombos = for {
-    	i <- (0 to length)
-    	combo <- occurrences.combinations(i)
-    } yield combo
-
-      def countCombos(list:List[(Char, Int)]): List[List[(Char, Int)]] =
-      		list match {
-        	case Nil => List(Nil)
-            case (char, int)::tail => {  
-         	   for (i <- (1 to int))
-                  yield (char, i)::(countCombos(tail).flatten)
-                  // a problem: this returns the entire "count up"
-                  // for it's tail, i.e. this:
-                  // List((a,2), (b,1), (b,2))
-                  // instead of List((a,2),(b,1)) AND List((a,2),(b,2))
-    		   }.toList	
-        	}
-
-    initialCombos.toList.flatMap((combo) => countCombos(combo))
-        
-             
-    //Dam, watch the lecture tomorrow night, for perhaps a flash of inspiration
-    /*
-     * The thing from the video more directly maps to the below, b/c of 
-     * all the dropping, but they may be on to something with the recursive 
-     * call within the for loop
-     * 
-     * You Know what you want "loop" to do, or rather what you should do with 
-     * the above in general: For each item List(('a', 3)...),
-     * 
-     * 
-     * need to generate
-     * a new seq of lists Seq(List(('a', 1)...), List(('a', 2)...),...), that 
-     * then be all flattened together into the final list of lists
-     * 
-     * Easy for the case of length one, but what's the "recursive step" (may
-     * not actually be recursive)
-     * 
-     */
-    
-    //TODO: this shit be failing the test case. Check it out tomorrow
-    //shit, the second one is correct, you ain't got no short lists homie!
+    val word = occurrences.flatMap{case (char, int) => char.toString * int}
+    val result = for {
+		i <- (0 to word.length)
+		combo <- word.combinations(i)
+  	} yield wordOccurrences(combo mkString "")
+  	
+    result.toList  
   }
-  
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    * 
