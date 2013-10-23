@@ -6,14 +6,13 @@
 [0m[[0minfo[0m] [0m[32m- word anagrams: married[0m[0m
 [0m[[0minfo[0m] [0m[32m- word anagrams: player[0m[0m
 [0m[[0minfo[0m] [0m[32m- subtract: lard - r[0m[0m
-[0m[[0minfo[0m] [0m[31m- combinations: [] *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  List() did not equal List(List()) (AnagramsSuite.scala:55)[0m[0m
+[0m[[0minfo[0m] [0m[32m- combinations: [][0m[0m
 [0m[[0minfo[0m] [0m[31m- combinations: abba *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  Set(List((a,2), (b,1), (b,2)), List((a,1)), List((b,1)), List((b,2)), List((a,1), (b,1), (b,2)), List((a,2))) did not equal Set(List((a,1)), List((b,1)), List((b,2)), List((a,1), (b,1)), List(), List((a,2), (b,1)), List((a,2)), List((a,1), (b,2)), List((a,2), (b,2))) (AnagramsSuite.scala:71)[0m[0m
+[0m[[0minfo[0m] [0m[31m  Set(List((a,2), (b,1), (b,2)), List((a,1)), List((b,1)), List((b,2)), List(), List((a,1), (b,1), (b,2)), List((a,2))) did not equal Set(List((a,1)), List((b,1)), List((b,2)), List((a,1), (b,1)), List(), List((a,2), (b,1)), List((a,2)), List((a,1), (b,2)), List((a,2), (b,2))) (AnagramsSuite.scala:71)[0m[0m
 [0m[[0minfo[0m] [0m[31m- sentence anagrams: [] *** FAILED ***[0m[0m
 [0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
 [0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:252)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at forcomp.Anagrams$.sentenceAnagrams(Anagrams.scala:210)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at forcomp.Anagrams$.sentenceAnagrams(Anagrams.scala:211)[0m[0m
 [0m[[0minfo[0m] [0m[31m  at forcomp.AnagramsSuite$$anonfun$10.apply$mcV$sp(AnagramsSuite.scala:78)[0m[0m
 [0m[[0minfo[0m] [0m[31m  at forcomp.AnagramsSuite$$anonfun$10.apply(AnagramsSuite.scala:76)[0m[0m
 [0m[[0minfo[0m] [0m[31m  at forcomp.AnagramsSuite$$anonfun$10.apply(AnagramsSuite.scala:76)[0m[0m
@@ -26,7 +25,7 @@
 [0m[[0minfo[0m] [0m[31m- sentence anagrams: Linux rulez *** FAILED ***[0m[0m
 [0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
 [0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:252)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at forcomp.Anagrams$.sentenceAnagrams(Anagrams.scala:210)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at forcomp.Anagrams$.sentenceAnagrams(Anagrams.scala:211)[0m[0m
 [0m[[0minfo[0m] [0m[31m  at forcomp.AnagramsSuite$$anonfun$11.apply$mcV$sp(AnagramsSuite.scala:105)[0m[0m
 [0m[[0minfo[0m] [0m[31m  at forcomp.AnagramsSuite$$anonfun$11.apply(AnagramsSuite.scala:81)[0m[0m
 [0m[[0minfo[0m] [0m[31m  at forcomp.AnagramsSuite$$anonfun$11.apply(AnagramsSuite.scala:81)[0m[0m
