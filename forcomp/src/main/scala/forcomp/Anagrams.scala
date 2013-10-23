@@ -40,7 +40,7 @@ object Anagrams {
 
   /** Converts a sentence into its character occurrence list. */
   def sentenceOccurrences(s: Sentence): Occurrences = 
-    ( s flatMap (wordOccurrences(_)) ).sortBy{case (c, i) => c }
+    wordOccurrences(s mkString "").sortBy{case (c, i) => c }
 
   /** The `dictionaryByOccurrences` is a `Map` from different occurrences to a sequence of all
    *  the words that have that occurrence count.
