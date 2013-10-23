@@ -109,12 +109,27 @@ object Anagrams {
     	index <- (0 to length)
     	combo <- occurrences.combinations(index)
     } yield combo
-    println(initialCombos.toList)
-   
+
+      def countCombos(list:List[(Char, Int)]): List[List[(Char, Int)]] =
+      		list match {
+        	case Nil => Nil
+            case (char, int)::tail =>  
+         	   (for (i <- (1 to int))
+                  yield (char, i)::countCombos(tail).flatten).toList
+        	}
+
+    initialCombos.toList.flatMap((combo) => countCombos(combo))
+        
+             
     //Dam, watch the lecture tomorrow night, for perhaps a flash of inspiration
     /*
+     * The thing from the video more directly maps to the below, b/c of 
+     * all the dropping, but they may be on to something with the recursive 
+     * call within the for loop
+     * 
      * You Know what you want "loop" to do, or rather what you should do with 
      * the above in general: For each item List(('a', 3)...),
+     * 
      * 
      * need to generate
      * a new seq of lists Seq(List(('a', 1)...), List(('a', 2)...),...), that 
@@ -123,29 +138,6 @@ object Anagrams {
      * Easy for the case of length one, but what's the "recursive step" (may
      * not actually be recursive)
      * 
-     * so do:
-     * 
-     *
-     * 
-     * def countCombos(List[(Char, Int)]): Seq(List[(Char, Int)])
-     * 		match list {
-     *   	case Nil => Nil
-     *      case (char, int)::tail =>  
-     *    the problem is this ->
-     *    		for (i <- (1 to int))
-     *             yield (char, i)::countCombos(tail)
-     *         this damn pattern keeps coming up, it's so close!
-     *   }
-     *   
-     *or {
-     * 		for {(char, int) <- list
-     *  		  i <- (1 to int)} yield (char, i)
-     *      
-     *       no! b/c it will just expand all the shit out, maybe
-     *       
-     *     for { (char, int) <- list } yield	 		
-     * 	
-     * }
      */
     
     //TODO: this shit be failing the test case. Check it out tomorrow
@@ -167,7 +159,7 @@ object Anagrams {
     val toSub = y.toMap.withDefault((c:Char) => 0)
     def loop(acc: Occurrences, x:Occurrences): Occurrences = 
       x match {
-	      case Nil => Nil
+	      case Nil => acc.reverse
 	      case (char, count)::tail => 
 	    	loop((char, count - toSub(char))::acc, tail)
       }
@@ -215,12 +207,12 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = { 
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
 		  //first things first, merge all the words together. There's got 
 		  // to be a "join" or something, maybe flatMap
     
 		  //then need to iterate le combos, lots of other stuff involving subtract and stuff
   
-  }
+  
 
 }
