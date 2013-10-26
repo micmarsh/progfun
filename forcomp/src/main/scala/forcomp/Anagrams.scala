@@ -103,8 +103,8 @@ object Anagrams {
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  def occsToWord(occurrences: Occurrences) = 
-    occurrences.flatMap{case (char, int) => char.toString * int}.toString
+  def occsToWord(occurrences: Occurrences):Word = 
+    (occurrences.map{case (char, int) => char.toString * int}) mkString ""
   
   def combinations(occurrences: Occurrences): List[Occurrences] = {
     val word = occsToWord(occurrences)
@@ -113,7 +113,8 @@ object Anagrams {
 		combo <- word.combinations(i)
   	} yield wordOccurrences(combo mkString "")
   	
-    result.toList  
+  	
+    result.toSet.toList  
   }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
@@ -179,9 +180,6 @@ object Anagrams {
    *  Note: There is only one anagram of an empty sentence.
    */
   def sentenceAnagrams(sentence: Sentence): List[Sentence] =  {
-//    def saHelper(acc: List[Sentence], sentence:Sentence): List[Sentence] = {
-//      if 
-//    }
     if (sentence.isEmpty || sentence.head.isEmpty) List[Sentence](List())
     else {
       val wordGlob = sentenceOccurrences(sentence)      
@@ -190,8 +188,6 @@ object Anagrams {
     	  word <- wordAnagrams(occsToWord(combo))
     	  rest <- sentenceAnagrams(List(occsToWord(subtract(wordGlob, wordOccurrences(word)))))
       } yield word::rest
-  
-      
     }
   }
 

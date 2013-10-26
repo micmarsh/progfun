@@ -52,9 +52,10 @@ class AnagramsSuite extends FunSuite {
     val lad = List(('a', 1), ('d', 1), ('l', 1))
     assert(subtract(lard, r) === lad)
   }
-
-
-
+  println("lol combos")
+  combinations(sentenceOccurrences(List("Linux", "rulez")))
+  println("done with combos")
+  
   test("combinations: []") {
     assert(combinations(Nil) === List(Nil))
   }
