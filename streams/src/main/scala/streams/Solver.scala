@@ -28,8 +28,6 @@ trait Solver extends GameDef {
    */
   def neighborsWithHistory(b: Block, history: List[Move]): Stream[(Block, List[Move])] = {
     val neighbors = b.legalNeighbors
-    println("legal neighbors nigga")
-    println(neighbors)
     val withHistory = neighbors map {case (block, move) => (block, move::history)}
     withHistory.toStream
   }
@@ -41,7 +39,7 @@ trait Solver extends GameDef {
    */
   def newNeighborsOnly(neighbors: Stream[(Block, List[Move])],
                        explored: Set[Block]): Stream[(Block, List[Move])] = 
-                         neighbors filter {case (block, l) => explored(block)}
+                         neighbors filter {case (block, l) => !explored(block)}
 
   /**
    * The function `from` returns the stream of all possible paths

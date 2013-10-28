@@ -42,13 +42,29 @@ class BloxorzSuite extends FunSuite {
   }
 
   
-  test("neighborly things") {
+  test("basic neighborly things") {
     new Level1 {
       val (b, history) = (Block(Pos(1,1),Pos(1,1)), List(Left,Up))
       assert(neighborsWithHistory(b, history).toSet === Set(
 		  (Block(Pos(1,2),Pos(1,3)), List(Right,Left,Up)),
 		  (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
 		) )
+    }
+  }
+  
+  test("filtering out already visited neighbors") {
+    new Level1 {
+      val filteredNeighbors = newNeighborsOnly(
+		  Set(
+		    (Block(Pos(1,2),Pos(1,3)), List(Right,Left,Up)),
+		    (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+		  ).toStream,
+		
+		  Set(Block(Pos(1,2),Pos(1,3)), Block(Pos(1,1),Pos(1,1)))
+		)
+	  assert(filteredNeighbors.toSet === Set(
+	    (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+	  ))
     }
   }
   
