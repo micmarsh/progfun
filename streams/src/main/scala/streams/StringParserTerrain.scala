@@ -79,7 +79,7 @@ trait StringParserTerrain extends GameDef {
     Pos(
            	row
     ,
-    	levelVector(row).indexWhere((char: Char) => char != c)
+    	levelVector(row).indexWhere((char: Char) => char == c)
     )
   }
 

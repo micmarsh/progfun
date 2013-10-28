@@ -66,15 +66,18 @@ trait Solver extends GameDef {
    */
   def from(initial: Stream[(Block, List[Move])],
            explored: Set[Block]): Stream[(Block, List[Move])] = {
-      if(initial.isEmpty) initial
-      else {
-	      val nextSteps = for {
-	        (block, moves) <- initial
-	        result <- newNeighborsOnly(neighborsWithHistory(block, moves), explored)
-	      } yield result
+      val nextSteps = for {
+        (block, moves) <- initial
+        result <- newNeighborsOnly(neighborsWithHistory(block, moves), explored)
+      } yield result
+      
+      if (nextSteps.isEmpty) {
+        initial
+      } else {
 	      val newlyExplored = (nextSteps map (_._1)).toSet
-	      from(nextSteps, explored ++ newlyExplored)
+	      from(nextSteps ++ initial, explored ++ newlyExplored)
       }
+      
   }
 
   /**
@@ -89,7 +92,7 @@ trait Solver extends GameDef {
    * Returns a stream of all possible pairs of the goal block along
    * with the history how it was reached.
    */
-  lazy val pathsToGoal: Stream[(Block, List[Move])] =
+  lazy val pathsToGoal: Stream[(Block, List[Move])] = 
 		  pathsFromStart filter {case (block, moves) => done(block) }
 
   /**
