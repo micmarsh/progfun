@@ -56,10 +56,10 @@ trait StringParserTerrain extends GameDef {
     (pos: Pos) => {
       val Pos(row, col) = pos
       if (row < 0 || col < 0) false
-      else if (row > levelVector.length) false
+      else if (row >= levelVector.length) false
       else {
         val rowVect = levelVector(row)
-        if (col > rowVect.length) false
+        if (col >= rowVect.length) false
         else rowVect(col) != '-'
       }
     }
