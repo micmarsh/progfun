@@ -9,6 +9,7 @@ import Bloxorz._
 
 @RunWith(classOf[JUnitRunner])
 class BloxorzSuite extends FunSuite {
+    
 
   trait SolutionChecker extends GameDef with Solver with StringParserTerrain {
     /**
@@ -40,6 +41,17 @@ class BloxorzSuite extends FunSuite {
     val optsolution = List(Right, Right, Down, Right, Right, Right, Down)
   }
 
+  
+  test("neighborly things") {
+    new Level1 {
+      val (b, history) = (Block(Pos(1,1),Pos(1,1)), List(Left,Up))
+      assert(neighborsWithHistory(b, history).toSet === Set(
+		  (Block(Pos(1,2),Pos(1,3)), List(Right,Left,Up)),
+		  (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+		) )
+    }
+  }
+  
   test("terrain function level 1") {
     new Level1 {
       assert(terrain(Pos(0,0)), "0,0")

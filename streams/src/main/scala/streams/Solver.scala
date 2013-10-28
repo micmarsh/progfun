@@ -8,7 +8,7 @@ trait Solver extends GameDef {
   /**
    * Returns `true` if the block `b` is at the final position
    */
-  def done(b: Block): Boolean = b.b1 == b.b2 == goal
+  def done(b: Block): Boolean = (b.b2 == goal) && (b.b1 == goal)
 
   /**
    * This function takes two arguments: the current block `b` and
@@ -28,6 +28,8 @@ trait Solver extends GameDef {
    */
   def neighborsWithHistory(b: Block, history: List[Move]): Stream[(Block, List[Move])] = {
     val neighbors = b.legalNeighbors
+    println("legal neighbors nigga")
+    println(neighbors)
     val withHistory = neighbors map {case (block, move) => (block, move::history)}
     withHistory.toStream
   }
@@ -65,8 +67,8 @@ trait Solver extends GameDef {
    * construct the correctly sorted stream.
    */
   def from(initial: Stream[(Block, List[Move])],
-           explored: Set[Block]): Stream[(Block, List[Move])] = ???
-  
+           explored: Set[Block]): Stream[(Block, List[Move])] = 
+???  
 
   /**
    * The stream of all paths that begin at the starting block.
@@ -92,6 +94,8 @@ trait Solver extends GameDef {
    * position.
    */
   lazy val solution: List[Move] = {
+    //I guess we know this is finite both b/c of the filter and 
+    //the fact that from will somehow cap things by keeping the "explored" log
     val (b, moves) = pathsToGoal minBy {case (block, moves) => moves.length}
     moves.reverse
   }
